@@ -3,7 +3,7 @@
 """Update Scikit learn
 
 Revision ID: 5b7ffd45dbea
-Revises: 6aaa467a1b11
+Revises: 29ecca388884
 Create Date: 2019-08-26 16:06:25.427703
 
 """
