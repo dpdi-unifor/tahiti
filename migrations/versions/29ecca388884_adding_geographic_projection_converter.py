@@ -80,7 +80,7 @@ def _insert_operation_form():
 
     columns = ('id', 'enabled', 'order', 'category')
     data = [
-        (4024, 1, 1, 'execution'),
+        (4044, 1, 1, 'execution'),
     ]
 
     rows = [dict(list(zip(columns, row))) for row in data]
@@ -96,8 +96,8 @@ def _insert_operation_form_translation():
 
     columns = ('id', 'locale', 'name')
     data = [
-        (4024, 'en', 'Execution'),
-        (4024, 'pt', 'Execução'),
+        (4044, 'en', 'Execution'),
+        (4044, 'pt', 'Execução'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -113,7 +113,7 @@ def _insert_operation_operation_form():
     data = [
         (4045, 41),
         (4045, 110),
-        (4045, 4024),
+        (4045, 4044),
 
     ]
 
@@ -155,8 +155,8 @@ def _insert_operation_port():
 
     columns = [c.name for c in tb.columns]
     data = [
-        (4078, 'INPUT', None, 4045, 1, 'ONE', 'input data'),
-        (4079, 'OUTPUT', None, 4045, 1, 'MANY', 'output data'),
+        (4098, 'INPUT', None, 4045, 1, 'ONE', 'input data'),
+        (4099, 'OUTPUT', None, 4045, 1, 'MANY', 'output data'),
 
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
@@ -173,10 +173,10 @@ def _insert_operation_port_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-        (4078, 'en', 'input data', 'Input data'),
-        (4078, 'pt', 'dados de entrada', 'Dados de entrada'),
-        (4079, 'en', 'output data', 'Output data'),
-        (4079, 'pt', 'dados de saída', 'Dados de saída'),
+        (4098, 'en', 'input data', 'Input data'),
+        (4098, 'pt', 'dados de entrada', 'Dados de entrada'),
+        (4099, 'en', 'output data', 'Output data'),
+        (4099, 'pt', 'dados de saída', 'Dados de saída'),
 
     ]
 
@@ -192,8 +192,8 @@ def _insert_operation_port_interface_operation_port():
 
     columns = ('operation_port_id', 'operation_port_interface_id')
     data = [
-        (4078, 1),
-        (4079, 1),
+        (4098, 1),
+        (4099, 1),
 
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
@@ -218,12 +218,12 @@ def _insert_operation_form_field():
     columns = ('id', 'name', 'type', 'required', 'order', 'default',
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id')
     data = [
-        (4114, 'src_projection', 'INTEGER', 1, 1, None, 'integer', None, None, 'EXECUTION', 4024),
-        (4115, 'dst_projection', 'INTEGER', 1, 2, None, 'integer', None, None, 'EXECUTION', 4024),
-        (4116, 'col_lat', 'TEXT', 1, 3, None, 'attribute-selector', None, '{"multiple": false}', 'EXECUTION', 4024),
-        (4117, 'col_lon', 'TEXT', 1, 4, None, 'attribute-selector', None, '{"multiple": false}', 'EXECUTION', 4024),
-        (4118, 'alias_lat', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 4024),
-        (4119, 'alias_lon', 'TEXT', 0, 6, None, 'text', None, None, 'EXECUTION', 4024),
+        (4344, 'src_projection', 'INTEGER', 1, 1, None, 'integer', None, None, 'EXECUTION', 4044),
+        (4345, 'dst_projection', 'INTEGER', 1, 2, None, 'integer', None, None, 'EXECUTION', 4044),
+        (4346, 'col_lat', 'TEXT', 1, 3, None, 'attribute-selector', None, '{"multiple": false}', 'EXECUTION', 4044),
+        (4347, 'col_lon', 'TEXT', 1, 4, None, 'attribute-selector', None, '{"multiple": false}', 'EXECUTION', 4044),
+        (4348, 'alias_lat', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 4044),
+        (4349, 'alias_lon', 'TEXT', 0, 6, None, 'text', None, None, 'EXECUTION', 4044),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -240,19 +240,19 @@ def _insert_operation_form_field_translation():
     columns = ('id', 'locale', 'label', 'help')
     data = [
 
-        (4114, 'en', 'Source projection (epsg code)', 'Source projection (epsg)'),
-        (4114, 'pt', 'Projeção de origem (epsg)', 'Projeção de origem (epsg)'),
-        (4115, 'en', 'Destination projection (epsg code)', 'Destination projection (epsg code).'),
-        (4115, 'pt', 'Projeção de destino (epsg)', 'Projeção de destino (epsg).'),
-        (4116, 'en', 'Latitude column', 'Latitude column name.'),
-        (4116, 'pt', 'Coluna de Latitude', 'Nome da coluna que contem a Latitude.'),
-        (4117, 'en', 'Longitude column', 'Longitude column name.'),
-        (4117, 'pt', 'Coluna de Longitude', 'Nome da coluna que contem a Longitude.'),
-        (4118, 'en', 'New Latitude column', 'Alias for the converted Latitude.'),
-        (4118, 'pt', 'Nova coluna de Latitude', 'Novo nome da coluna para as Latitudes convertidas (se vazia, '
+        (4344, 'en', 'Source projection (epsg code)', 'Source projection (epsg)'),
+        (4344, 'pt', 'Projeção de origem (epsg)', 'Projeção de origem (epsg)'),
+        (4345, 'en', 'Destination projection (epsg code)', 'Destination projection (epsg code).'),
+        (4345, 'pt', 'Projeção de destino (epsg)', 'Projeção de destino (epsg).'),
+        (4346, 'en', 'Latitude column', 'Latitude column name.'),
+        (4346, 'pt', 'Coluna de Latitude', 'Nome da coluna que contem a Latitude.'),
+        (4347, 'en', 'Longitude column', 'Longitude column name.'),
+        (4347, 'pt', 'Coluna de Longitude', 'Nome da coluna que contem a Longitude.'),
+        (4348, 'en', 'New Latitude column', 'Alias for the converted Latitude.'),
+        (4348, 'pt', 'Nova coluna de Latitude', 'Novo nome da coluna para as Latitudes convertidas (se vazia, '
                                                 'vai substituir a atual).'),
-        (4119, 'en', 'New Longitude column', 'Alias for the converted Longitude (if empty will replace it).'),
-        (4119, 'pt', 'Nova coluna de Longitude', 'Novo nome da coluna para as Longitudes convertidas (se vazia, '
+        (4349, 'en', 'New Longitude column', 'Alias for the converted Longitude (if empty will replace it).'),
+        (4349, 'pt', 'Nova coluna de Longitude', 'Novo nome da coluna para as Longitudes convertidas (se vazia, '
                                                  'vai substituir a atual).'),
 
     ]
@@ -271,26 +271,25 @@ all_commands = [
      'DELETE FROM operation_category_operation '
      'WHERE operation_id = 4045'),
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id = 4024'),
+     'DELETE FROM operation_form WHERE id = 4044'),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id = 4024'),
+     'DELETE FROM operation_form_translation WHERE id = 4044'),
     (_insert_operation_operation_form,
      'DELETE FROM operation_operation_form '
      'WHERE operation_id = 4045'),
     (_insert_operation_translation,
      'DELETE FROM operation_translation WHERE id = 4045'),
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE id BETWEEN 4078 AND 4079'),
+     'DELETE FROM operation_port WHERE id BETWEEN 4098 AND 4099'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id BETWEEN 4078 AND 4079'),
+     'DELETE FROM operation_port_translation WHERE id BETWEEN 4098 AND 4099'),
     (_insert_operation_port_interface_operation_port,
      'DELETE FROM operation_port_interface_operation_port WHERE '
-     'operation_port_id BETWEEN 4078 AND 4079'),
+     'operation_port_id BETWEEN 4098 AND 4099'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 4114 AND 4119'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 4344 AND 4349;'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation '
-     'WHERE id BETWEEN 4114 AND 4119'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4344 AND 4349;'),
 
     ("""
         DELETE FROM operation_form_field_translation where id = 235; 
