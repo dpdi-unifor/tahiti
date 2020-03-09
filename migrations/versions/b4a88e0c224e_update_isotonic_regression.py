@@ -26,9 +26,9 @@ depends_on = None
 
 ISOTONIC_ID = 4046
 ISOTONIC_FORM = 4045
-MODEL_PORT = 9999
-INPUT_PORT = 9999
-OUTPUT_PORT = 9999
+INPUT_PORT = 4100
+OUTPUT_PORT = 4101
+MODEL_PORT = 4102
 
 
 def _insert_operation():
@@ -42,20 +42,6 @@ def _insert_operation():
     data = [
         (ISOTONIC_ID, "isotonic-regression-model", 1, "TRANSFORMATION",
          "fa-battery-quarter"),
-    ]
-    rows = [dict(list(zip(columns, row))) for row in data]
-    op.bulk_insert(tb, rows)
-
-
-def _insert_new_operation_platform():
-    tb = table(
-        'operation_platform',
-        column('operation_id', Integer),
-        column('platform_id', Integer))
-
-    columns = ('operation_id', 'platform_id')
-    data = [
-        (ISOTONIC_ID, 4),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -105,8 +91,8 @@ def _insert_operation_port():
     columns = [c.name for c in tb.columns]
     data = [
         (INPUT_PORT, "INPUT", None, 1, "ONE", ISOTONIC_ID, "train input data"),
-        (MODEL_PORT, "OUTPUT", None, 2, "MANY", ISOTONIC_ID, "model"),
         (OUTPUT_PORT, "OUTPUT", None, 1, "MANY", ISOTONIC_ID, "output data"),
+        (MODEL_PORT, "OUTPUT", None, 2, "MANY", ISOTONIC_ID, "model"),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -238,12 +224,22 @@ def _insert_operation_form_field():
                'enable_conditions')
     data = [
 
+        (4350, 'features', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', ISOTONIC_FORM, None),
+        (4351, 'label', 'TEXT', 1, 2, None, 'attribute-selector', None, '{\"multiple\": false}', 'EXECUTION',
+         ISOTONIC_FORM, None),
+        (4352, 'prediction', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION', ISOTONIC_FORM, None),
+        (4353, 'isotonic', 'TEXT', 0, 5, None, 'dropdown', None,
+         json.dumps([
+             {"key": "true", "value": "Isotonic/increasing", "pt": "Isot\\u00f4nica/crescente"},
+             {"value": "Antitonic/decreasing", "key": "false", "pt": "Antit\\u00f4nica/decrescente"}
+         ]), 'EXECUTION', ISOTONIC_FORM, None),
+
         # Flatten - data_format
-        (245, 'y_min', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION',
+        (4354, 'y_min', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION',
          ISOTONIC_FORM, None),
-        (248, 'y_max', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION',
+        (4355, 'y_max', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION',
          ISOTONIC_FORM, None),
-        (487, 'out_of_bounds', 'TEXT', 0, 3, "nan", 'dropdown', None,
+        (4356, 'out_of_bounds', 'TEXT', 0, 3, "nan", 'dropdown', None,
          json.dumps([
              {"key": "nan", "value": "nan"},
              {"key": "clip", "value": "clip"},
@@ -265,15 +261,25 @@ def _insert_operation_form_field_translation():
 
     columns = ('id', 'locale', 'label', 'help')
     data = [
+
+        (4350, 'en', 'Features', 'Features'),
+        (4350, 'pt', 'Atributo(s) previsor(es)', 'Atributo(s) previsor(es)'),
+        (4351, 'en', 'Label', 'Label'),
+        (4351, 'pt', 'Atributo usado como rótulo (label)', 'Atributo usado como rótulo (label)'),
+        (4352, 'en', 'Prediction', 'Prediction'),
+        (4352, 'pt', 'Nome do atributo usado como predição', 'Nome do atributo usado como predição.'),
+        (4353, 'en', 'Isotonic', 'Isotonic'),
+        (4353, 'pt', 'Isotonic', 'Isotonic'),
+
         # Flatten - data_format
-        (245, 'en', 'Y min', 'Y min.'),
-        (245, 'pt', 'Y min', 'Y min.'),
+        (4354, 'en', 'Y min', 'Y min.'),
+        (4354, 'pt', 'Y min', 'Y min.'),
 
-        (248, 'en', 'Y max', 'Y max.'),
-        (248, 'pt', 'Y max', 'Y max.'),
+        (4355, 'en', 'Y max', 'Y max.'),
+        (4355, 'pt', 'Y max', 'Y max.'),
 
-        (487, 'en', 'Out of bounds', 'Out of bounds.'),
-        (487, 'pt', 'Out of bounds', 'Out of bounds.'),
+        (4356, 'en', 'Out of bounds', 'Out of bounds.'),
+        (4356, 'pt', 'Out of bounds', 'Out of bounds.'),
 
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
@@ -285,7 +291,7 @@ all_commands = [
      'DELETE FROM operation WHERE id = {}'.format(ISOTONIC_ID)),
     (_insert_operation_translation,
      'DELETE FROM operation_translation WHERE id = {}'.format(ISOTONIC_ID)),
-    (_insert_new_operation_platform,
+    (_insert_operation_platform,
      'DELETE FROM operation_platform WHERE operation_id = {}'
      .format(ISOTONIC_ID)),
     (_insert_operation_category_operation,
@@ -295,27 +301,20 @@ all_commands = [
     (_insert_operation_form,
      'DELETE FROM operation_form WHERE id = {}'.format(ISOTONIC_FORM)),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id = {}'
-     .format(ISOTONIC_FORM)),
+     'DELETE FROM operation_form_translation WHERE id = {}'.format(ISOTONIC_FORM)),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form '
-     'WHERE operation_id = {}'.format(ISOTONIC_ID)),
-
+     'DELETE FROM operation_operation_form WHERE operation_id = {}'.format(ISOTONIC_ID)),
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE id IN ({}, {}, {})'
-     .format(INPUT_PORT, OUTPUT_PORT, MODEL_PORT)),
+     'DELETE FROM operation_port WHERE id IN ({}, {}, {})'.format(INPUT_PORT, OUTPUT_PORT, MODEL_PORT)),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id IN ({}, {}, {})'
-     .format(INPUT_PORT, OUTPUT_PORT, MODEL_PORT)),
+     'DELETE FROM operation_port_translation WHERE id IN ({}, {}, {})'.format(INPUT_PORT, OUTPUT_PORT, MODEL_PORT)),
     (_insert_operation_port_interface_operation_port,
      'DELETE FROM operation_port_interface_operation_port WHERE '
-     'operation_port_id IN ({}, {}, {})'
-     .format(INPUT_PORT, OUTPUT_PORT, MODEL_PORT)),
-
+     'operation_port_id IN ({}, {}, {})'.format(INPUT_PORT, OUTPUT_PORT, MODEL_PORT)),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN ?? AND ??;'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 4350 AND 4356;'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN ?? AND ??;'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4350 AND 4356;'),
 
 ]
 
