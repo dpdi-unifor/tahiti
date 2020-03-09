@@ -287,6 +287,8 @@ def _insert_operation_form_field_translation():
 
 
 all_commands = [
+    ("DELETE FROM operation_platform WHERE operation_id = 112 AND platform_id = 4;",
+     "INSERT INTO operation_platform (operation_id, platform_id) VALUES (112, 4);"),
     (_insert_operation,
      'DELETE FROM operation WHERE id = {}'.format(ISOTONIC_ID)),
     (_insert_operation_translation,
